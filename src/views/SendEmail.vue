@@ -2,6 +2,9 @@
 <div class="wrapper">
     <div class="form-wrapper">
         <form id="email-form" method="post" @submit="checkForm" action="/emails">
+            <div id="success-box">
+                <b>Success!</b>
+            </div>
             <div id="errors-box">
                 <div v-if="errors.length">
                     <b>Please correct the following error(s):</b>
@@ -59,49 +62,72 @@ export default {
         checkForm: function(e) {
             e.preventDefault();
 
-            this.errors = []
+            this.errors = [];
 
-            const er = document.getElementById('errors-box')
-
-            if (this.errors) {
-                er.style.display = 'block'
-            } else {
-                er.style.display = 'none'
-            }
+            const er = document.getElementById('errors-box');
 
             if (!this.subject) {
-                this.errors.push('Subject required')
+                this.errors.push('Subject required');
             }
             if (!this.address) {
-                this.errors.push('Address required')
+                this.errors.push('Address required');
             }
             if (!this.text) {
-                this.errors.push('Text cannot be empty. Write something.')
+                this.errors.push('Text cannot be empty. Write something.');
             }
 
             if (!this.errors.length) {
-                console.log('!!!!');
-                const formData = new FormData();
-                formData.append('subject', this.subject)
-                formData.append('addres', this.addres)
-                formData.append('text', this.text)
-                formData.append('delay', this.delay)
+                const subject = this.subject;
+                const address = this.address;
+                const text = this.text;
+                const delay = this.delay;
+
+                this.subject = ''
+                this.address = ''
+                this.text = ''
+                this.delay = 0
+
+                const success = document.getElementById('success-box');
+                success.style.display = 'block';
+                this.fade(success);
 
                 axios({
                     method: 'post',
                     url: SEND_EMAIL_URL,
                     data: {
-                        'subject': this.subject,
-                        'address': this.address,
-                        'text': this.text,
-                        'delay': this.delay,
+                        'subject': subject,
+                        'address': address,
+                        'text': text,
+                        'delay': delay,
                     },
-                }).then(response => {
-                    console.log(response);
-                })
+                }).then(() => {
+
+                }).catch(
+                    (e) => {
+                        console.log(e);
+                    }
+                )
 
             }
-        }
+
+            if (this.errors.length) {
+                er.style.display = 'block'
+            } else {
+                er.style.display = 'none'
+            }
+        },
+        fade: function(element) {
+            let op = 1;
+            let timer = setInterval(function() {
+                if (op <= 0.1) {
+                    clearInterval(timer);
+                    element.style.display = 'none';
+                }
+                element.style.opacity = op;
+                element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                op -= op * 0.05;
+            }, 50);
+        },
     }
 }
 </script>
@@ -147,6 +173,7 @@ input {
     color: #2c3e50;
     padding-left: 4px;
     padding-right: 4px;
+    text-align: center;
 }
 
 input:focus {
@@ -207,6 +234,13 @@ textarea:focus {
     background-color: #2c3e50;
     border: none;
     color: white;
+}
+
+#success-box {
+    display: none;
+    color: #20b01e;
+    border: solid #20b01e 1px;
+    padding: 4px;
 }
 
 #errors-box {

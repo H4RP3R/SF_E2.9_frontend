@@ -1,8 +1,15 @@
 <template>
-<div>
-    <div v-for="(email, index) in data" :key="index">
-        <email-item v-bind:email="email">
-        </email-item>
+<div class="wrapper">
+    <div class="emails-wrapper">
+        <div v-if="data.length">
+            <div v-for="(email, index) in data" :key="index">
+                <email-item v-bind:email="email">
+                </email-item>
+            </div>
+        </div>
+        <div v-else>
+            no data
+        </div>
     </div>
 </div>
 </template>
@@ -18,7 +25,7 @@ export default {
 
     data() {
         return {
-            data: 'Fuck',
+            data: [],
         }
     },
 
@@ -27,6 +34,8 @@ export default {
             axios.get(EMAILS_DATA_URL)
                 .then((response) => {
                     this.data = response.data
+                }).catch((e) => {
+                    console.log(e);
                 });
         }
     },
@@ -38,3 +47,16 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emails-wrapper {
+    width: 600px;
+}
+</style>
