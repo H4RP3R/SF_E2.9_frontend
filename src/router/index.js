@@ -23,11 +23,17 @@ const routes = [
         path: '/',
         name: 'SendEmail',
         component: SendEmail,
+        meta: {
+            title: 'Mailer - Send Email',
+        }
     },
     {
         path: '/emails',
         name: 'EmailsList',
         component: EmailsList,
+        meta: {
+            title: 'Mailer - Last Emails',
+        }
     }
 ]
 

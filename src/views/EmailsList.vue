@@ -8,7 +8,7 @@
             </div>
         </div>
         <div v-else>
-            no data
+            loading data...
         </div>
     </div>
 </div>

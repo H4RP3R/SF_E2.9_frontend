@@ -199,6 +199,7 @@ textarea {
     color: #2c3e50;
     padding-left: 4px;
     padding-right: 4px;
+    resize: vertical;
 }
 
 textarea:focus {

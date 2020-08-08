@@ -53,7 +53,7 @@ export default {
 .item-wrapper {
     border: 1px dashed #b01e1e;
     border-top-style: hidden;
-    margin-top: 12px;
+    margin-top: 18px;
     display: flex;
     flex-direction: column;
 }
