@@ -37,10 +37,19 @@ export default {
                 }).catch((e) => {
                     console.log(e);
                 });
+        },
+        pollData() {
+            this.polling = setInterval(() => {
+                this.getData()
+            }, 20000)
         }
     },
     created() {
         this.getData();
+        this.pollData();
+    },
+    beforeDestroy() {
+        clearInterval(this.polling)
     },
     components: {
         'email-item': EmailItem,

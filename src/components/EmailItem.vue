@@ -12,11 +12,13 @@
         </div>
     </div>
     <div class="item-body">
+        <div v-if="email.sent" class="status-box status-box-sent"></div>
+        <div v-else class="status-box"></div>
         [<b>At: {{ emailDate() }}</b>]
         {{ email.text }}
     </div>
     <div class="id-box">
-        <p>id: {{ email.id }}</p>
+        <span>id: {{ email.id }}</span>
     </div>
 </div>
 </template>
@@ -58,9 +60,16 @@ export default {
 
 .id-box {
     position: relative;
-    font-size: 10px;
+    font-size: 12px;
     border-top: 1px solid #b01e1e;
     background-color: floralwhite;
+    display: flex;
+    justify-content: center;
+    height: 22px;
+}
+
+.id-box span {
+    margin-top: 4px;
 }
 
 .item-header {
@@ -87,5 +96,17 @@ export default {
     padding: 10px 5px;
     min-height: 40px;
     text-align: left;
+}
+
+.status-box {
+    background-color: gold;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.status-box-sent {
+    background-color: limegreen;
 }
 </style>
