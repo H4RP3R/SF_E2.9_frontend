@@ -12,6 +12,7 @@
         </div>
     </div>
     <div class="item-body">
+        [<b>At: {{ emailDate() }}</b>]
         {{ email.text }}
     </div>
     <div class="id-box">
@@ -33,6 +34,14 @@ export default {
                 result += email.slice(pos, email.length)
                 return result
             }
+        },
+        emailDate() {
+            const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT",
+                "NOV", "DEC"
+            ];
+            const dt = new Date(this.email.created)
+            return dt.getFullYear() + '-' + months[dt.getMonth()] + '-' + dt.getDate() + ' ' +
+                dt.getHours() + ':' + dt.getMinutes()
         }
     }
 };
